@@ -17,5 +17,10 @@ public class SobreDadosViewModel : BaseViewModel
 
     // Instâncias usadas só para ler os textos de cada critério (polimorfismo).
     public IReadOnlyList<IndicadorSaneamento> Indicadores { get; } =
-        [new AbastecimentoAgua(), new EsgotamentoSanitario(), new ColetaLixo()];
+        new List<IndicadorSaneamento>
+        {
+            new AbastecimentoAgua(),
+            new EsgotamentoSanitario(),
+            new ColetaLixo()
+        };
 }

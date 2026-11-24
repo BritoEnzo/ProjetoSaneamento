@@ -5,30 +5,34 @@
              xmlns:models="clr-namespace:SaneaBrasil.Models"
              x:Class="SaneaBrasil.Views.EstadosPage"
              x:DataType="vm:EstadosViewModel"
-             Title="{Binding Titulo}">
+             Title="Estados">
 
-    <Grid RowDefinitions="Auto,Auto,*" Padding="16" RowSpacing="8">
-        <Label Text="Escolha um estado" FontSize="20" FontAttributes="Bold" />
+    <ScrollView>
+        <VerticalStackLayout Padding="16" Spacing="16">
+            <Label Text="ESTADOS" FontSize="13" TextColor="{AppThemeBinding Light=#8E8E93, Dark=#AEAEB2}" />
 
-        <VerticalStackLayout Grid.Row="1">
-            <ActivityIndicator IsRunning="{Binding Carregando}" IsVisible="{Binding Carregando}" />
-            <Label Text="{Binding MensagemErro}" IsVisible="{Binding TemErro}" TextColor="#C62828" />
+            <ActivityIndicator IsRunning="{Binding Carregando}" IsVisible="{Binding Carregando}" Color="#007AFF" />
+            <Label Text="{Binding MensagemErro}" IsVisible="{Binding TemErro}" TextColor="#FF3B30" FontSize="13" />
+
+            <Border Padding="0" StrokeThickness="0">
+                <CollectionView ItemsSource="{Binding Estados}"
+                                SelectionMode="Single"
+                                SelectedItem="{Binding EstadoSelecionado}">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="models:Estado">
+                            <Grid ColumnDefinitions="*,Auto,16" MinimumHeightRequest="44" Padding="16,0">
+                                <Label Text="{Binding Nome}" FontSize="17" VerticalOptions="Center" />
+                                <Label Grid.Column="1" Text="{Binding Sigla}" FontSize="15"
+                                       TextColor="{AppThemeBinding Light=#8E8E93, Dark=#AEAEB2}"
+                                       VerticalOptions="Center" />
+                                <Label Grid.Column="2" Text="›" FontSize="22" HorizontalTextAlignment="End"
+                                       TextColor="{AppThemeBinding Light=#C6C6C8, Dark=#8E8E93}"
+                                       VerticalOptions="Center" />
+                            </Grid>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </Border>
         </VerticalStackLayout>
-
-        <CollectionView Grid.Row="2"
-                        ItemsSource="{Binding Estados}"
-                        SelectionMode="Single"
-                        SelectedItem="{Binding EstadoSelecionado}">
-            <CollectionView.ItemTemplate>
-                <DataTemplate x:DataType="models:Estado">
-                    <Border Margin="0,4" Padding="14" StrokeShape="RoundRectangle 10" Stroke="#CFD8DC">
-                        <VerticalStackLayout>
-                            <Label Text="{Binding Nome}" FontSize="17" FontAttributes="Bold" />
-                            <Label Text="{Binding Descricao}" FontSize="13" TextColor="Gray" />
-                        </VerticalStackLayout>
-                    </Border>
-                </DataTemplate>
-            </CollectionView.ItemTemplate>
-        </CollectionView>
-    </Grid>
+    </ScrollView>
 </ContentPage>

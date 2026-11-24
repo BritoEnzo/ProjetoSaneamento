@@ -6,8 +6,8 @@ namespace SaneaBrasil.Services;
 
 public class BairroService : IBairroService
 {
-    private static readonly IReadOnlyList<Bairro> Bairros =
-    [
+    private static readonly IReadOnlyList<Bairro> Bairros = new List<Bairro>
+    {
         new() { Nome = "A.E. Carvalho" },
         new() { Nome = "Aricanduva" },
         new() { Nome = "Artur Alvim" },
@@ -39,7 +39,7 @@ public class BairroService : IBairroService
         new() { Nome = "Vila Formosa" },
         new() { Nome = "Vila Matilde" },
         new() { Nome = "Vila Prudente" }
-    ];
+    };
 
     public IReadOnlyList<Bairro> Buscar(string nome)
     {

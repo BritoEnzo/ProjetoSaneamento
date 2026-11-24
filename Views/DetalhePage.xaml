@@ -12,73 +12,80 @@
         <conv:NivelParaCorConverter x:Key="NivelParaCor" />
     </ContentPage.Resources>
 
+    <ContentPage.ToolbarItems>
+        <ToolbarItem IconImageSource="star.svg"
+                     Command="{Binding AlternarFavoritoCommand}" />
+    </ContentPage.ToolbarItems>
+
     <RefreshView Command="{Binding RecarregarCommand}" IsRefreshing="{Binding Carregando, Mode=OneWay}">
         <ScrollView>
-            <VerticalStackLayout Padding="20" Spacing="14">
+            <VerticalStackLayout Padding="16" Spacing="32">
 
-                <Label Text="{Binding NomeMunicipio}" FontSize="26" FontAttributes="Bold" />
-                <Label Text="{Binding ContextoBairro}" FontSize="13" TextColor="Gray" />
-                <Label Text="{Binding PopulacaoTexto}" FontSize="14" TextColor="Gray" />
+                <Label Text="{Binding NomeMunicipio}" FontSize="34" FontAttributes="Bold" />
+                <Label Text="{Binding ContextoBairro}" FontSize="13" TextColor="{AppThemeBinding Light=#8E8E93, Dark=#AEAEB2}" />
+                <Label Text="{Binding PopulacaoTexto}" FontSize="14" TextColor="{AppThemeBinding Light=#8E8E93, Dark=#AEAEB2}" />
 
-                <Label Text="{Binding MensagemErro}" IsVisible="{Binding TemErro}" TextColor="#C62828" />
+                <Label Text="{Binding MensagemErro}" IsVisible="{Binding TemErro}" TextColor="#FF3B30" FontSize="13" />
 
-                <!-- Cartão do índice geral -->
-                <Border Padding="20" StrokeShape="RoundRectangle 16"
-                        Stroke="{Binding NivelGeral, Converter={StaticResource NivelParaCor}}"
-                        StrokeThickness="3"
-                        IsVisible="{Binding TemIndice}">
-                    <VerticalStackLayout Spacing="4" HorizontalOptions="Center">
-                        <Label Text="Índice de saneamento" FontSize="16" HorizontalOptions="Center" />
-                        <Label Text="{Binding IndiceTexto}" FontSize="56" FontAttributes="Bold"
-                               HorizontalOptions="Center"
-                               TextColor="{Binding NivelGeral, Converter={StaticResource NivelParaCor}}" />
-                        <Label Text="de 100" FontSize="13" TextColor="Gray" HorizontalOptions="Center" />
-                        <Label Text="{Binding NivelTexto}" FontSize="20" FontAttributes="Bold" HorizontalOptions="Center"
-                               TextColor="{Binding NivelGeral, Converter={StaticResource NivelParaCor}}" />
+                <Grid IsVisible="{Binding TemIndice}" HorizontalOptions="Center" WidthRequest="176" HeightRequest="176">
+                    <Border StrokeThickness="8"
+                            Stroke="{AppThemeBinding Light=#C6C6C8, Dark=#38383A}"
+                            Background="Transparent"
+                            StrokeShape="Ellipse"
+                            WidthRequest="176"
+                            HeightRequest="176" />
+                    <Border StrokeThickness="8"
+                            Stroke="{Binding NivelGeral, Converter={StaticResource NivelParaCor}}"
+                            Background="Transparent"
+                            StrokeShape="Ellipse"
+                            WidthRequest="176"
+                            HeightRequest="176"
+                            Margin="6" />
+                    <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center" Spacing="2">
+                        <Label Text="{Binding IndiceTexto}" FontSize="34" FontAttributes="Bold"
+                               HorizontalTextAlignment="Center" />
+                        <Label Text="{Binding NivelTexto}" FontSize="13" FontAttributes="Bold"
+                               TextColor="{Binding NivelGeral, Converter={StaticResource NivelParaCor}}"
+                               HorizontalTextAlignment="Center" />
+                        <Label Text="de 100" FontSize="13"
+                               TextColor="{AppThemeBinding Light=#8E8E93, Dark=#AEAEB2}"
+                               HorizontalTextAlignment="Center" />
                     </VerticalStackLayout>
-                </Border>
+                </Grid>
 
-                <!-- Um cartão por indicador -->
-                <VerticalStackLayout BindableLayout.ItemsSource="{Binding Indicadores}" Spacing="12">
-                    <BindableLayout.ItemTemplate>
-                        <DataTemplate x:DataType="ind:IndicadorSaneamento">
-                            <Border Padding="16" StrokeShape="RoundRectangle 12" Stroke="#CFD8DC">
-                                <VerticalStackLayout Spacing="6">
-                                    <Grid ColumnDefinitions="*,Auto">
-                                        <Label FontSize="17" FontAttributes="Bold">
-                                            <Label.FormattedText>
-                                                <FormattedString>
-                                                    <Span Text="{Binding Icone}" />
-                                                    <Span Text=" " />
-                                                    <Span Text="{Binding Nome}" />
-                                                </FormattedString>
-                                            </Label.FormattedText>
-                                        </Label>
-                                        <Label Grid.Column="1" Text="{Binding PercentualTexto}" FontSize="17" FontAttributes="Bold"
-                                               TextColor="{Binding Nivel, Converter={StaticResource NivelParaCor}}" />
-                                    </Grid>
-                                    <ProgressBar Progress="{Binding Fracao}"
-                                                 ProgressColor="{Binding Nivel, Converter={StaticResource NivelParaCor}}" />
-                                    <Label Text="{Binding NivelDescricao}" FontSize="13" FontAttributes="Bold"
-                                           TextColor="{Binding Nivel, Converter={StaticResource NivelParaCor}}" />
-                                    <Label Text="{Binding Resumo}" FontSize="13" />
-                                    <Label Text="{Binding MetaTexto}" FontSize="12" TextColor="Gray" />
-                                </VerticalStackLayout>
-                            </Border>
-                        </DataTemplate>
-                    </BindableLayout.ItemTemplate>
+                <VerticalStackLayout Spacing="8">
+                    <Label Text="INDICADORES" FontSize="13"
+                           TextColor="{AppThemeBinding Light=#8E8E93, Dark=#AEAEB2}" />
+                    <Border Padding="16,8" StrokeThickness="0">
+                        <VerticalStackLayout BindableLayout.ItemsSource="{Binding Indicadores}" Spacing="0">
+                            <BindableLayout.ItemTemplate>
+                                <DataTemplate x:DataType="ind:IndicadorSaneamento">
+                                    <VerticalStackLayout Padding="0,12" Spacing="8">
+                                        <Grid ColumnDefinitions="*,Auto">
+                                            <Label Text="{Binding Nome}" FontSize="17" FontAttributes="Bold" />
+                                            <Label Grid.Column="1" Text="{Binding PercentualTexto}" FontSize="17"
+                                                   TextColor="{Binding Nivel, Converter={StaticResource NivelParaCor}}" />
+                                        </Grid>
+                                        <ProgressBar Progress="{Binding Fracao}" HeightRequest="4"
+                                                     ProgressColor="{Binding Nivel, Converter={StaticResource NivelParaCor}}" />
+                                        <Label Text="{Binding Resumo}" FontSize="13"
+                                               TextColor="{AppThemeBinding Light=#8E8E93, Dark=#AEAEB2}" />
+                                    </VerticalStackLayout>
+                                </DataTemplate>
+                            </BindableLayout.ItemTemplate>
+                        </VerticalStackLayout>
+                    </Border>
                 </VerticalStackLayout>
 
-                <Button Text="{Binding TextoFavorito}"
-                        BackgroundColor="#1565C0" TextColor="White"
-                        Command="{Binding AlternarFavoritoCommand}" />
-
                 <Button Text="Como o índice é calculado?"
-                        BackgroundColor="Transparent" TextColor="#1565C0"
-                        BorderColor="#1565C0" BorderWidth="2"
+                        BackgroundColor="Transparent" TextColor="#007AFF"
+                        BorderWidth="0"
+                        CornerRadius="8"
+                        FontSize="17"
+                        HeightRequest="44"
                         Command="{Binding ComoCalculamosCommand}" />
 
-                <Label Text="{Binding FonteTexto}" FontSize="11" TextColor="Gray" />
+                <Label Text="{Binding FonteTexto}" FontSize="13" TextColor="{AppThemeBinding Light=#8E8E93, Dark=#AEAEB2}" />
             </VerticalStackLayout>
         </ScrollView>
     </RefreshView>

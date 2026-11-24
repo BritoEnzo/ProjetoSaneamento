@@ -11,41 +11,35 @@
        xmlns:views="clr-namespace:SaneaBrasil.Views"
        Title="SaneaBrasil"
        FlyoutBehavior="Flyout"
-       Shell.BackgroundColor="#1565C0"
-       Shell.ForegroundColor="White"
-       Shell.TitleColor="White"
-       Shell.TabBarBackgroundColor="White"
-       Shell.TabBarTitleColor="#1565C0"
-       Shell.TabBarUnselectedColor="Gray">
+       FlyoutBackgroundColor="{AppThemeBinding Light={StaticResource SystemBackground}, Dark={StaticResource SystemBackgroundDark}}"
+       Shell.BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Black}}"
+       Shell.ForegroundColor="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource White}}"
+       Shell.TitleColor="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource White}}"
+       Shell.NavBarHasShadow="False"
+       Shell.TabBarBackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource SecondarySystemBackgroundDark}}"
+       Shell.TabBarTitleColor="#007AFF"
+       Shell.TabBarForegroundColor="#007AFF"
+       Shell.TabBarUnselectedColor="#8E8E93">
 
-    <Shell.FlyoutHeader>
-        <VerticalStackLayout Padding="20" BackgroundColor="#1565C0">
-            <Label Text="💧 SaneaBrasil" FontSize="22" FontAttributes="Bold" TextColor="White" />
-            <Label Text="Saneamento básico por município" FontSize="13" TextColor="White" />
-        </VerticalStackLayout>
-    </Shell.FlyoutHeader>
-
-    <!-- 1 + 2: item do menu lateral que contém as abas -->
-    <FlyoutItem Title="Saneamento" FlyoutDisplayOptions="AsSingleItem">
-        <Tab Title="Início">
+    <FlyoutItem Title="Saneamento" Icon="tab_inicio.svg" FlyoutDisplayOptions="AsSingleItem">
+        <Tab Title="Início" Icon="tab_inicio.svg">
             <ShellContent Title="Início"
                           ContentTemplate="{DataTemplate views:InicioPage}"
                           Route="inicio" />
         </Tab>
-        <Tab Title="Estados">
+        <Tab Title="Estados" Icon="tab_estados.svg">
             <ShellContent Title="Estados"
                           ContentTemplate="{DataTemplate views:EstadosPage}"
                           Route="estados" />
         </Tab>
-        <Tab Title="Favoritos">
+        <Tab Title="Favoritos" Icon="tab_favoritos.svg">
             <ShellContent Title="Favoritos"
                           ContentTemplate="{DataTemplate views:FavoritosPage}"
                           Route="favoritos" />
         </Tab>
     </FlyoutItem>
 
-    <!-- 1: segundo item do menu lateral -->
-    <FlyoutItem Title="Sobre o app">
+    <FlyoutItem Title="Sobre o app" Icon="sobre.svg">
         <ShellContent Title="Sobre o app"
                       ContentTemplate="{DataTemplate views:SobrePage}"
                       Route="sobre" />

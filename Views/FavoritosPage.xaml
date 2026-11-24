@@ -5,31 +5,37 @@
              xmlns:models="clr-namespace:SaneaBrasil.Models"
              x:Class="SaneaBrasil.Views.FavoritosPage"
              x:DataType="vm:FavoritosViewModel"
-             Title="{Binding Titulo}">
+             Title="Favoritos">
 
-    <CollectionView Margin="16"
-                    ItemsSource="{Binding Municipios}"
-                    SelectionMode="Single"
-                    SelectedItem="{Binding MunicipioSelecionado}">
-        <CollectionView.Header>
-            <Label Text="Seus municípios salvos" FontSize="20" FontAttributes="Bold" Margin="0,0,0,8" />
-        </CollectionView.Header>
-        <CollectionView.EmptyView>
-            <VerticalStackLayout Padding="24" Spacing="8">
-                <Label Text="☆" FontSize="48" HorizontalOptions="Center" TextColor="Gray" />
-                <Label Text="Nenhum favorito ainda. Abra um município e toque em “Adicionar aos favoritos”."
-                       HorizontalTextAlignment="Center" TextColor="Gray" />
-            </VerticalStackLayout>
-        </CollectionView.EmptyView>
-        <CollectionView.ItemTemplate>
-            <DataTemplate x:DataType="models:Municipio">
-                <Border Margin="0,4" Padding="14" StrokeShape="RoundRectangle 10" Stroke="#CFD8DC">
-                    <VerticalStackLayout>
-                        <Label Text="{Binding NomeCompleto}" FontSize="17" FontAttributes="Bold" />
-                        <Label Text="{Binding Descricao}" FontSize="12" TextColor="Gray" />
-                    </VerticalStackLayout>
-                </Border>
-            </DataTemplate>
-        </CollectionView.ItemTemplate>
-    </CollectionView>
+    <ScrollView>
+        <VerticalStackLayout Padding="16" Spacing="16">
+            <Label Text="FAVORITOS" FontSize="13" TextColor="{AppThemeBinding Light=#8E8E93, Dark=#AEAEB2}" />
+            <Border Padding="0" StrokeThickness="0" VerticalOptions="Start">
+                <CollectionView ItemsSource="{Binding Municipios}"
+                                SelectionMode="Single"
+                                SelectedItem="{Binding MunicipioSelecionado}">
+                    <CollectionView.EmptyView>
+                        <Label Text="Nenhum favorito ainda"
+                               HorizontalTextAlignment="Center"
+                               Margin="16,24"
+                               FontSize="15"
+                               TextColor="{AppThemeBinding Light=#8E8E93, Dark=#AEAEB2}" />
+                    </CollectionView.EmptyView>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="models:Municipio">
+                            <Grid ColumnDefinitions="*,Auto,16" MinimumHeightRequest="44" Padding="16,0">
+                                <Label Text="{Binding NomeCompleto}" FontSize="17" VerticalOptions="Center" />
+                                <Label Grid.Column="1" Text="{Binding Descricao}" FontSize="13"
+                                       TextColor="{AppThemeBinding Light=#8E8E93, Dark=#AEAEB2}"
+                                       VerticalOptions="Center" />
+                                <Label Grid.Column="2" Text="›" FontSize="22" HorizontalTextAlignment="End"
+                                       TextColor="{AppThemeBinding Light=#C6C6C8, Dark=#8E8E93}"
+                                       VerticalOptions="Center" />
+                            </Grid>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </Border>
+        </VerticalStackLayout>
+    </ScrollView>
 </ContentPage>

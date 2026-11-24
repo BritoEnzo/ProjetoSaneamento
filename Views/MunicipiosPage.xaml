@@ -7,30 +7,35 @@
              x:DataType="vm:MunicipiosViewModel"
              Title="{Binding Titulo}">
 
-    <Grid RowDefinitions="Auto,Auto,*" Padding="16" RowSpacing="8">
-        <SearchBar Placeholder="Buscar cidade..." Text="{Binding Filtro}" />
+    <Grid RowDefinitions="Auto,Auto,*" Padding="16,8,16,16" RowSpacing="16">
+        <SearchBar Placeholder="Buscar cidade" Text="{Binding Filtro}" />
 
         <VerticalStackLayout Grid.Row="1">
-            <ActivityIndicator IsRunning="{Binding Carregando}" IsVisible="{Binding Carregando}" />
-            <Label Text="{Binding MensagemErro}" IsVisible="{Binding TemErro}" TextColor="#C62828" />
+            <ActivityIndicator IsRunning="{Binding Carregando}" IsVisible="{Binding Carregando}" Color="#007AFF" />
+            <Label Text="{Binding MensagemErro}" IsVisible="{Binding TemErro}" TextColor="#FF3B30" FontSize="13" />
         </VerticalStackLayout>
 
-        <CollectionView Grid.Row="2"
-                        ItemsSource="{Binding Municipios}"
-                        SelectionMode="Single"
-                        SelectedItem="{Binding MunicipioSelecionado}">
-            <CollectionView.EmptyView>
-                <Label Text="Nenhuma cidade encontrada." HorizontalOptions="Center" Margin="0,24" TextColor="Gray" />
-            </CollectionView.EmptyView>
-            <CollectionView.ItemTemplate>
-                <DataTemplate x:DataType="models:Municipio">
-                    <VerticalStackLayout Padding="8,10">
-                        <Label Text="{Binding Nome}" FontSize="16" />
-                        <Label Text="{Binding Descricao}" FontSize="12" TextColor="Gray" />
-                        <BoxView HeightRequest="1" Color="#ECEFF1" Margin="0,8,0,0" />
-                    </VerticalStackLayout>
-                </DataTemplate>
-            </CollectionView.ItemTemplate>
-        </CollectionView>
+        <Border Grid.Row="2" Padding="0" StrokeThickness="0" VerticalOptions="Start">
+            <CollectionView ItemsSource="{Binding Municipios}"
+                            SelectionMode="Single"
+                            SelectedItem="{Binding MunicipioSelecionado}">
+                <CollectionView.EmptyView>
+                    <Label Text="Nenhuma cidade encontrada." HorizontalOptions="Center" Margin="16,24" FontSize="15" TextColor="{AppThemeBinding Light=#8E8E93, Dark=#AEAEB2}" />
+                </CollectionView.EmptyView>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="models:Municipio">
+                        <Grid ColumnDefinitions="*,Auto,16" MinimumHeightRequest="44" Padding="16,0">
+                            <Label Text="{Binding Nome}" FontSize="17" VerticalOptions="Center" />
+                            <Label Grid.Column="1" Text="{Binding Uf}" FontSize="15"
+                                   TextColor="{AppThemeBinding Light=#8E8E93, Dark=#AEAEB2}"
+                                   VerticalOptions="Center" />
+                            <Label Grid.Column="2" Text="›" FontSize="22" HorizontalTextAlignment="End"
+                                   TextColor="{AppThemeBinding Light=#C6C6C8, Dark=#8E8E93}"
+                                   VerticalOptions="Center" />
+                        </Grid>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </Border>
     </Grid>
 </ContentPage>

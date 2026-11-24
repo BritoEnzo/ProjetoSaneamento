@@ -11,5 +11,5 @@ public class ShellNavegacaoService : INavegacaoService
     public Task VoltarAsync() => Shell.Current.GoToAsync("..");
 
     public Task MostrarAlertaAsync(string titulo, string mensagem) =>
-        Shell.Current.DisplayAlert(titulo, mensagem, "OK");
+        Shell.Current.DisplayAlertAsync(titulo, mensagem, "OK");
 }
