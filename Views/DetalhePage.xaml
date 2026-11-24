@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:SaneaBrasil.ViewModels"
+             xmlns:ind="clr-namespace:SaneaBrasil.Models.Indicadores"
+             xmlns:conv="clr-namespace:SaneaBrasil.Converters"
+             x:Class="SaneaBrasil.Views.DetalhePage"
+             x:DataType="vm:DetalheViewModel"
+             Title="{Binding Titulo}">
+
+    <ContentPage.Resources>
+        <conv:NivelParaCorConverter x:Key="NivelParaCor" />
+    </ContentPage.Resources>
+
+    <RefreshView Command="{Binding RecarregarCommand}" IsRefreshing="{Binding Carregando, Mode=OneWay}">
+        <ScrollView>
+            <VerticalStackLayout Padding="20" Spacing="14">
+
+                <Label Text="{Binding NomeMunicipio}" FontSize="26" FontAttributes="Bold" />
+                <Label Text="{Binding ContextoBairro}" FontSize="13" TextColor="Gray" />
+                <Label Text="{Binding PopulacaoTexto}" FontSize="14" TextColor="Gray" />
+
+                <Label Text="{Binding MensagemErro}" IsVisible="{Binding TemErro}" TextColor="#C62828" />
+
+                <!-- Cartão do índice geral -->
+                <Border Padding="20" StrokeShape="RoundRectangle 16"
+                        Stroke="{Binding NivelGeral, Converter={StaticResource NivelParaCor}}"
+                        StrokeThickness="3"
+                        IsVisible="{Binding TemIndice}">
+                    <VerticalStackLayout Spacing="4" HorizontalOptions="Center">
+                        <Label Text="Índice de saneamento" FontSize="16" HorizontalOptions="Center" />
+                        <Label Text="{Binding IndiceTexto}" FontSize="56" FontAttributes="Bold"
+                               HorizontalOptions="Center"
+                               TextColor="{Binding NivelGeral, Converter={StaticResource NivelParaCor}}" />
+                        <Label Text="de 100" FontSize="13" TextColor="Gray" HorizontalOptions="Center" />
+                        <Label Text="{Binding NivelTexto}" FontSize="20" FontAttributes="Bold" HorizontalOptions="Center"
+                               TextColor="{Binding NivelGeral, Converter={StaticResource NivelParaCor}}" />
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- Um cartão por indicador -->
+                <VerticalStackLayout BindableLayout.ItemsSource="{Binding Indicadores}" Spacing="12">
+                    <BindableLayout.ItemTemplate>
+                        <DataTemplate x:DataType="ind:IndicadorSaneamento">
+                            <Border Padding="16" StrokeShape="RoundRectangle 12" Stroke="#CFD8DC">
+                                <VerticalStackLayout Spacing="6">
+                                    <Grid ColumnDefinitions="*,Auto">
+                                        <Label FontSize="17" FontAttributes="Bold">
+                                            <Label.FormattedText>
+                                                <FormattedString>
+                                                    <Span Text="{Binding Icone}" />
+                                                    <Span Text=" " />
+                                                    <Span Text="{Binding Nome}" />
+                                                </FormattedString>
+                                            </Label.FormattedText>
+                                        </Label>
+                                        <Label Grid.Column="1" Text="{Binding PercentualTexto}" FontSize="17" FontAttributes="Bold"
+                                               TextColor="{Binding Nivel, Converter={StaticResource NivelParaCor}}" />
+                                    </Grid>
+                                    <ProgressBar Progress="{Binding Fracao}"
+                                                 ProgressColor="{Binding Nivel, Converter={StaticResource NivelParaCor}}" />
+                                    <Label Text="{Binding NivelDescricao}" FontSize="13" FontAttributes="Bold"
+                                           TextColor="{Binding Nivel, Converter={StaticResource NivelParaCor}}" />
+                                    <Label Text="{Binding Resumo}" FontSize="13" />
+                                    <Label Text="{Binding MetaTexto}" FontSize="12" TextColor="Gray" />
+                                </VerticalStackLayout>
+                            </Border>
+                        </DataTemplate>
+                    </BindableLayout.ItemTemplate>
+                </VerticalStackLayout>
+
+                <Button Text="{Binding TextoFavorito}"
+                        BackgroundColor="#1565C0" TextColor="White"
+                        Command="{Binding AlternarFavoritoCommand}" />
+
+                <Button Text="Como o índice é calculado?"
+                        BackgroundColor="Transparent" TextColor="#1565C0"
+                        BorderColor="#1565C0" BorderWidth="2"
+                        Command="{Binding ComoCalculamosCommand}" />
+
+                <Label Text="{Binding FonteTexto}" FontSize="11" TextColor="Gray" />
+            </VerticalStackLayout>
+        </ScrollView>
+    </RefreshView>
+</ContentPage>

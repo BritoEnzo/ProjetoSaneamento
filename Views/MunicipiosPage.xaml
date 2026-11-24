@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:SaneaBrasil.ViewModels"
+             xmlns:models="clr-namespace:SaneaBrasil.Models"
+             x:Class="SaneaBrasil.Views.MunicipiosPage"
+             x:DataType="vm:MunicipiosViewModel"
+             Title="{Binding Titulo}">
+
+    <Grid RowDefinitions="Auto,Auto,*" Padding="16" RowSpacing="8">
+        <SearchBar Placeholder="Buscar cidade..." Text="{Binding Filtro}" />
+
+        <VerticalStackLayout Grid.Row="1">
+            <ActivityIndicator IsRunning="{Binding Carregando}" IsVisible="{Binding Carregando}" />
+            <Label Text="{Binding MensagemErro}" IsVisible="{Binding TemErro}" TextColor="#C62828" />
+        </VerticalStackLayout>
+
+        <CollectionView Grid.Row="2"
+                        ItemsSource="{Binding Municipios}"
+                        SelectionMode="Single"
+                        SelectedItem="{Binding MunicipioSelecionado}">
+            <CollectionView.EmptyView>
+                <Label Text="Nenhuma cidade encontrada." HorizontalOptions="Center" Margin="0,24" TextColor="Gray" />
+            </CollectionView.EmptyView>
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="models:Municipio">
+                    <VerticalStackLayout Padding="8,10">
+                        <Label Text="{Binding Nome}" FontSize="16" />
+                        <Label Text="{Binding Descricao}" FontSize="12" TextColor="Gray" />
+                        <BoxView HeightRequest="1" Color="#ECEFF1" Margin="0,8,0,0" />
+                    </VerticalStackLayout>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </Grid>
+</ContentPage>

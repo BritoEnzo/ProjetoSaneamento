@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+    Os três tipos de navegação do app:
+      1. Flyout (menu lateral)   -> FlyoutItem "Saneamento" e "Sobre o app"
+      2. Tabs (abas)             -> Início / Estados / Favoritos dentro do primeiro FlyoutItem
+      3. Pilha (push) + Modal    -> rotas "municipios", "detalhe" e "sobredados" (registradas em AppShell.xaml.cs)
+-->
+<Shell x:Class="SaneaBrasil.AppShell"
+       xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+       xmlns:views="clr-namespace:SaneaBrasil.Views"
+       Title="SaneaBrasil"
+       FlyoutBehavior="Flyout"
+       Shell.BackgroundColor="#1565C0"
+       Shell.ForegroundColor="White"
+       Shell.TitleColor="White"
+       Shell.TabBarBackgroundColor="White"
+       Shell.TabBarTitleColor="#1565C0"
+       Shell.TabBarUnselectedColor="Gray">
+
+    <Shell.FlyoutHeader>
+        <VerticalStackLayout Padding="20" BackgroundColor="#1565C0">
+            <Label Text="💧 SaneaBrasil" FontSize="22" FontAttributes="Bold" TextColor="White" />
+            <Label Text="Saneamento básico por município" FontSize="13" TextColor="White" />
+        </VerticalStackLayout>
+    </Shell.FlyoutHeader>
+
+    <!-- 1 + 2: item do menu lateral que contém as abas -->
+    <FlyoutItem Title="Saneamento" FlyoutDisplayOptions="AsSingleItem">
+        <Tab Title="Início">
+            <ShellContent Title="Início"
+                          ContentTemplate="{DataTemplate views:InicioPage}"
+                          Route="inicio" />
+        </Tab>
+        <Tab Title="Estados">
+            <ShellContent Title="Estados"
+                          ContentTemplate="{DataTemplate views:EstadosPage}"
+                          Route="estados" />
+        </Tab>
+        <Tab Title="Favoritos">
+            <ShellContent Title="Favoritos"
+                          ContentTemplate="{DataTemplate views:FavoritosPage}"
+                          Route="favoritos" />
+        </Tab>
+    </FlyoutItem>
+
+    <!-- 1: segundo item do menu lateral -->
+    <FlyoutItem Title="Sobre o app">
+        <ShellContent Title="Sobre o app"
+                      ContentTemplate="{DataTemplate views:SobrePage}"
+                      Route="sobre" />
+    </FlyoutItem>
+</Shell>

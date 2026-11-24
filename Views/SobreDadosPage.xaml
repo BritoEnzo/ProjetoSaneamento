@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:SaneaBrasil.ViewModels"
+             xmlns:ind="clr-namespace:SaneaBrasil.Models.Indicadores"
+             x:Class="SaneaBrasil.Views.SobreDadosPage"
+             x:DataType="vm:SobreDadosViewModel"
+             Shell.PresentationMode="ModalAnimated"
+             Title="{Binding Titulo}">
+
+    <Grid RowDefinitions="*,Auto" Padding="24" RowSpacing="12">
+        <ScrollView>
+            <VerticalStackLayout Spacing="14">
+                <Label Text="Como o índice é calculado" FontSize="24" FontAttributes="Bold" />
+
+                <Label Text="Para cada indicador, somamos os domicílios do município em cada categoria do Censo 2022 e calculamos a porcentagem que tem atendimento adequado. O índice geral é a média simples dos três indicadores." />
+
+                <VerticalStackLayout BindableLayout.ItemsSource="{Binding Indicadores}" Spacing="10">
+                    <BindableLayout.ItemTemplate>
+                        <DataTemplate x:DataType="ind:IndicadorSaneamento">
+                            <Border Padding="14" StrokeShape="RoundRectangle 10" Stroke="#CFD8DC">
+                                <VerticalStackLayout Spacing="4">
+                                    <Label FontAttributes="Bold">
+                                        <Label.FormattedText>
+                                            <FormattedString>
+                                                <Span Text="{Binding Icone}" />
+                                                <Span Text=" " />
+                                                <Span Text="{Binding Nome}" />
+                                            </FormattedString>
+                                        </Label.FormattedText>
+                                    </Label>
+                                    <Label Text="{Binding CriterioAdequacao}" FontSize="13" />
+                                    <Label Text="{Binding TabelaSidra, StringFormat='Tabela SIDRA {0}'}" FontSize="12" TextColor="Gray" />
+                                </VerticalStackLayout>
+                            </Border>
+                        </DataTemplate>
+                    </BindableLayout.ItemTemplate>
+                </VerticalStackLayout>
+
+                <Label Text="Faixas: abaixo de 50 = Crítico · 50 a 69 = Baixo · 70 a 84 = Regular · 85 a 94 = Bom · 95 ou mais = Excelente."
+                       FontSize="13" />
+                <Label Text="Metas do Marco Legal do Saneamento (Lei 14.026/2020) para 2033: 99% com água e 90% com coleta e tratamento de esgoto."
+                       FontSize="13" TextColor="Gray" />
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <Button Grid.Row="1" Text="Fechar"
+                BackgroundColor="#1565C0" TextColor="White"
+                Command="{Binding FecharCommand}" />
+    </Grid>
+</ContentPage>

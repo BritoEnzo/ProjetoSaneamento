@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:SaneaBrasil.ViewModels"
+             xmlns:models="clr-namespace:SaneaBrasil.Models"
+             x:Class="SaneaBrasil.Views.EstadosPage"
+             x:DataType="vm:EstadosViewModel"
+             Title="{Binding Titulo}">
+
+    <Grid RowDefinitions="Auto,Auto,*" Padding="16" RowSpacing="8">
+        <Label Text="Escolha um estado" FontSize="20" FontAttributes="Bold" />
+
+        <VerticalStackLayout Grid.Row="1">
+            <ActivityIndicator IsRunning="{Binding Carregando}" IsVisible="{Binding Carregando}" />
+            <Label Text="{Binding MensagemErro}" IsVisible="{Binding TemErro}" TextColor="#C62828" />
+        </VerticalStackLayout>
+
+        <CollectionView Grid.Row="2"
+                        ItemsSource="{Binding Estados}"
+                        SelectionMode="Single"
+                        SelectedItem="{Binding EstadoSelecionado}">
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="models:Estado">
+                    <Border Margin="0,4" Padding="14" StrokeShape="RoundRectangle 10" Stroke="#CFD8DC">
+                        <VerticalStackLayout>
+                            <Label Text="{Binding Nome}" FontSize="17" FontAttributes="Bold" />
+                            <Label Text="{Binding Descricao}" FontSize="13" TextColor="Gray" />
+                        </VerticalStackLayout>
+                    </Border>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </Grid>
+</ContentPage>

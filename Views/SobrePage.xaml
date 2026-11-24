@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="SaneaBrasil.Views.SobrePage"
+             Title="Sobre o app">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="24" Spacing="14">
+            <Label Text="Sobre o SaneaBrasil" FontSize="24" FontAttributes="Bold" />
+
+            <Label Text="O app consulta, por município, a cobertura de abastecimento de água, esgotamento sanitário e coleta de lixo registrada no Censo Demográfico 2022, e combina os três num índice de 0 a 100." />
+
+            <Label Text="APIs utilizadas" FontSize="18" FontAttributes="Bold" />
+            <Label Text="1. IBGE Localidades: lista de estados e municípios." />
+            <Label Text="2. IBGE Agregados (SIDRA): dados do Censo 2022 (tabelas 6804, 6805, 6892 e 4714)." />
+            <Label Text="3. Busca local: filtra bairros da Zona Leste de São Paulo; os dados exibidos são municipais." />
+
+            <Label Text="Navegação" FontSize="18" FontAttributes="Bold" />
+            <Label Text="• Menu lateral (Flyout): alterna entre o app e esta tela." />
+            <Label Text="• Abas (Tabs): Início, Estados e Favoritos." />
+            <Label Text="• Pilha (Push): Estados → Municípios → Detalhe." />
+            <Label Text="• Modal: “Como o índice é calculado?”, no Detalhe." />
+
+            <Label Text="Os dados são públicos e pertencem ao IBGE. Este é um projeto acadêmico."
+                   FontSize="12" TextColor="Gray" />
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>
